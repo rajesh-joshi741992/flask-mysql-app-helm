@@ -1,0 +1,7 @@
+apiVersion: v2
+name: flask-mysql-app
+description: A Helm chart for deploying Flask application with MySQL on AWS
+type: application
+version: 0.1.0
+appVersion: "1.0"
+

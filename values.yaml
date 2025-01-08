@@ -8,10 +8,10 @@ mysql:
     enabled: true
     storageClass: ebs
     size: 10Gi
-  rootPassword: your_password
+  rootPassword: password
   database: test_db
-  user: flask
-  password: flask_password
+  user: root
+  password: password
 
 flask:
   image: flask-app:latest
@@ -21,6 +21,6 @@ flask:
     port: 8080
   env:
     MYSQL_SERVER: mysql
-    MYSQL_USER: flask
-    MYSQL_PASSWORD: flask_password
+    MYSQL_USER: root
+    MYSQL_PASSWORD: password
     MYSQL_DB: test_db
