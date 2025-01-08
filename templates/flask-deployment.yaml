@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-flask
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-flask
+    spec:
+      containers:
+      - name: flask-app
+        image: {{ .Values.flask.image }}
+        imagePullPolicy: {{ .Values.flask.imagePullPolicy }}
+        env:
+        - name: MYSQL_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-config
+              key: MYSQL_SERVER
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-config
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key: MYSQL_PASSWORD
+        - name: MYSQL_DB
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-config
+              key: MYSQL_DB
+        ports:
+        - containerPort: 8080

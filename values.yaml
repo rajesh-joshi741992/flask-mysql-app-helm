@@ -1,0 +1,26 @@
+mysql:
+  image: mysql:5.7
+  imagePullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 3306
+  persistence:
+    enabled: true
+    storageClass: ebs
+    size: 10Gi
+  rootPassword: your_password
+  database: test_db
+  user: flask
+  password: flask_password
+
+flask:
+  image: flask-app:latest
+  imagePullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8080
+  env:
+    MYSQL_SERVER: mysql
+    MYSQL_USER: flask
+    MYSQL_PASSWORD: flask_password
+    MYSQL_DB: test_db
